@@ -10,9 +10,10 @@ import NewOrder from "./components/NewOrder";
 import { useEffect } from "react";
 import { getMyOrders } from "./components/functions/Functions";
 import Dashboard from "./components/Dashboard";
+import NewClients from "./components/NewClients";
 
 function App() {
-  const { loggedIn, username, jwt } = useSelector((state) => state.user_store);
+  const { loggedIn, username } = useSelector((state) => state.user_store);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -61,6 +62,7 @@ function App() {
           <Route path="/login" element={<ShowData />} />
           <Route path="/new-order" element={<NewOrder />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/new-clients" element={<NewClients />} />
         </Routes>
       ) : (
         <Routes>
@@ -69,6 +71,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/new-order" element={<Login />} />
           <Route path="/dashboard" element={<Login />} />
+          <Route path="/new-clients" element={<Login />} />
         </Routes>
       )}
     </div>

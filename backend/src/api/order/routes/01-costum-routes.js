@@ -15,5 +15,10 @@ module.exports = {
       path: "/order/checkToken",
       handler: "order.checkToken",
     },
+    {
+      method: "POST",
+      path: "/new-users",
+      handler: "order.addUsers",
+    },
   ],
 };

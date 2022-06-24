@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getMyOrders } from "./functions/Functions";
@@ -77,6 +77,10 @@ export default function NavbarMenu() {
     navigate("/dashboard");
   }
 
+  function newClients() {
+    navigate("/new-clients");
+  }
+
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -98,13 +102,20 @@ export default function NavbarMenu() {
               )}
 
               {loggedIn ? (
-                <Nav.Link onClick={(e) => newOrder(e)}>New Order</Nav.Link>
+                <NavDropdown title="Actions" id="basic-nav-dropdown">
+                  <NavDropdown.Item onClick={() => newClients()}>
+                    New Clients from CSV
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => newOrder()}>
+                    New Order
+                  </NavDropdown.Item>
+                </NavDropdown>
               ) : (
                 <p></p>
               )}
 
               {loggedIn ? (
-                <Nav.Link onClick={(e) => getDashboard(e)}>Dashboard</Nav.Link>
+                <Nav.Link onClick={() => getDashboard()}>Dashboard</Nav.Link>
               ) : (
                 <p></p>
               )}

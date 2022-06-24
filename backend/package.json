@@ -13,6 +13,9 @@
     "@strapi/plugin-i18n": "4.2.0",
     "@strapi/plugin-users-permissions": "4.2.0",
     "@strapi/strapi": "4.2.0",
+    "axios": "^0.27.2",
+    "csv-parser": "^3.0.0",
+    "csvtojson": "^2.0.10",
     "mysql": "2.18.1",
     "strapi-utils": "^3.6.10"
   },
