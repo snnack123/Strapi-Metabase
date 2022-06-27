@@ -22,6 +22,44 @@ export function getMyOrders(jwt, username) {
     });
 }
 
+export function getProducts(jwt) {
+  makeFetch.method = "GET";
+  makeFetch.headers.Authorization = "Bearer " + jwt;
+
+  delete makeFetch.body;
+  delete makeFetch.authorization;
+  delete makeFetch.headers.authorization;
+
+  return fetch(`http://localhost:1337/api/products?populate[0]=categories`)
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.error) {
+        return "error";
+      } else {
+        return res;
+      }
+    });
+}
+
+export function getCategories(jwt) {
+  makeFetch.method = "GET";
+  makeFetch.headers.Authorization = "Bearer " + jwt;
+
+  delete makeFetch.body;
+  delete makeFetch.authorization;
+  delete makeFetch.headers.authorization;
+
+  return fetch(`http://localhost:1337/api/categories`)
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.error) {
+        return "error";
+      } else {
+        return res;
+      }
+    });
+}
+
 export function setDate(date) {
   let day = new Date(date).getDay();
   let month = new Date(date).getMonth();

@@ -22,6 +22,13 @@ export function productsReducer(state = initialState, action) {
     }
     case "products/clearData":
       return { ...state, data: [] };
+    case "products/clearCategories":
+      return { ...state, categories: [] };
+    case "products/deleteProduct":
+      return {
+        ...state,
+        data: [...state.data.filter((item) => item.id !== action.payload)],
+      };
     case "products/newOrder":
       return { ...state, newOrder: action.payload };
     case "products/addToCart": {

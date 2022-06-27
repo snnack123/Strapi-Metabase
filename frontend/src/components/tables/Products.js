@@ -52,7 +52,11 @@ const Products = () => {
               <td>{d.attributes.description}</td>
               <td>{d.attributes.price}</td>
               <td>{d.attributes.qty}</td>
-              <td>{d.attributes.categories.data[0].attributes.name}</td>
+              {d.attributes.categories.data.length > 0 ? (
+                <td>{d.attributes.categories.data[0].attributes.name}</td>
+              ) : (
+                <td></td>
+              )}
             </tr>
           ))}
         </tbody>

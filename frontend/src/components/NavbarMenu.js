@@ -81,6 +81,10 @@ export default function NavbarMenu() {
     navigate("/new-clients");
   }
 
+  function newProduct() {
+    navigate("/products");
+  }
+
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -90,24 +94,28 @@ export default function NavbarMenu() {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
               {loggedIn ? (
-                <Nav.Link onClick={() => getAllData()}>All Data</Nav.Link>
-              ) : (
-                <p></p>
-              )}
-
-              {loggedIn ? (
-                <Nav.Link onClick={(e) => getOrders(e)}>My Orders</Nav.Link>
+                <Nav.Link onClick={() => getAllData()}>See Data</Nav.Link>
               ) : (
                 <p></p>
               )}
 
               {loggedIn ? (
                 <NavDropdown title="Actions" id="basic-nav-dropdown">
-                  <NavDropdown.Item onClick={() => newClients()}>
-                    New Clients from CSV
-                  </NavDropdown.Item>
                   <NavDropdown.Item onClick={() => newOrder()}>
                     New Order
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => newProduct()}>
+                    CRUD Product
+                  </NavDropdown.Item>
+                </NavDropdown>
+              ) : (
+                <p></p>
+              )}
+
+              {loggedIn ? (
+                <NavDropdown title="Import" id="basic-nav-dropdown">
+                  <NavDropdown.Item onClick={() => newClients()}>
+                    New Clients from CSV
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
@@ -120,6 +128,14 @@ export default function NavbarMenu() {
                 <p></p>
               )}
             </Nav>
+            <Nav>
+              {loggedIn ? (
+                <Nav.Link onClick={(e) => getOrders(e)}>My Orders</Nav.Link>
+              ) : (
+                <p></p>
+              )}
+            </Nav>
+
             <Nav>
               {loggedIn ? (
                 <Nav.Link onClick={(e) => logout(e)}>Logout</Nav.Link>

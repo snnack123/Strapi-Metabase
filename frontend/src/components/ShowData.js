@@ -61,6 +61,7 @@ const ShowData = () => {
       fetch(`http://localhost:1337/api/${coll}?populate[0]=${populate}`)
         .then((res) => res.json())
         .then((res) => {
+          console.log(res);
           if (res.data !== null && res.data.length > 0) {
             if (coll === "products") {
               dispatch({ type: "products/setData", payload: res.data });
@@ -138,14 +139,6 @@ const ShowData = () => {
               </Form>
             </div>
             <div>
-              {/* {data.length > 0 && collection === "categories" ? (
-                <Categories />
-              ) : data.length > 0 && collection === "products" ? (
-                <Products />
-              ) : (
-                <p></p>
-              )} */}
-
               {categories.length > 0 && collection === "categories" ? (
                 <Categories />
               ) : (
