@@ -95,9 +95,7 @@ export default function NavbarMenu() {
             <Nav className="me-auto">
               {loggedIn ? (
                 <Nav.Link onClick={() => getAllData()}>See Data</Nav.Link>
-              ) : (
-                <p></p>
-              )}
+              ) : null}
 
               {loggedIn ? (
                 <NavDropdown title="Actions" id="basic-nav-dropdown">
@@ -108,9 +106,7 @@ export default function NavbarMenu() {
                     CRUD Product
                   </NavDropdown.Item>
                 </NavDropdown>
-              ) : (
-                <p></p>
-              )}
+              ) : null}
 
               {loggedIn ? (
                 <NavDropdown title="Import" id="basic-nav-dropdown">
@@ -118,22 +114,16 @@ export default function NavbarMenu() {
                     New Clients from CSV
                   </NavDropdown.Item>
                 </NavDropdown>
-              ) : (
-                <p></p>
-              )}
+              ) : null}
 
               {loggedIn ? (
                 <Nav.Link onClick={() => getDashboard()}>Dashboard</Nav.Link>
-              ) : (
-                <p></p>
-              )}
+              ) : null}
             </Nav>
             <Nav>
               {loggedIn ? (
                 <Nav.Link onClick={(e) => getOrders(e)}>My Orders</Nav.Link>
-              ) : (
-                <p></p>
-              )}
+              ) : null}
             </Nav>
 
             <Nav>

@@ -13,6 +13,7 @@ import Dashboard from "./components/Dashboard";
 import NewClients from "./components/NewClients";
 import ProductsCRUD from "./CRUD/ProductsCRUD";
 import EditProduct from "./CRUD/EditProduct";
+import AddProduct from "./CRUD/AddProduct";
 
 function App() {
   const { loggedIn, username } = useSelector((state) => state.user_store);
@@ -67,6 +68,7 @@ function App() {
           <Route path="/new-clients" element={<NewClients />} />
           <Route path="/products" element={<ProductsCRUD />} />
           <Route path="/edit-product/:id" element={<EditProduct />} />
+          <Route path="/add-product" element={<AddProduct />} />
         </Routes>
       ) : (
         <Routes>
@@ -78,6 +80,7 @@ function App() {
           <Route path="/new-clients" element={<Login />} />
           <Route path="/products" element={<Login />} />
           <Route path="/edit-product/:id" element={<Login />} />
+          <Route path="/add-product" element={<Login />} />
         </Routes>
       )}
     </div>

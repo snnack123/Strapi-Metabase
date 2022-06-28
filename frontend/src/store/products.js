@@ -20,6 +20,9 @@ export function productsReducer(state = initialState, action) {
     case "products/setCategories": {
       return { ...state, categories: [...state.categories, ...action.payload] };
     }
+    case "products/newProduct": {
+      return { ...state, data: [...state.data, action.payload] };
+    }
     case "products/clearData":
       return { ...state, data: [] };
     case "products/clearCategories":

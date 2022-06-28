@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Table, Button, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts, getCategories } from "../components/functions/Functions";
+import { getProducts } from "../components/functions/Functions";
 import { useNavigate } from "react-router-dom";
 import { makeFetch } from "../utils/Api";
 
 const ProductsCRUD = () => {
-  const { data, categories } = useSelector((state) => state.products_store);
+  const { data } = useSelector((state) => state.products_store);
   const { jwt } = useSelector((state) => state.user_store);
 
   const [show, setShow] = useState(false);
@@ -29,14 +29,6 @@ const ProductsCRUD = () => {
 
     if (result !== "error" && result !== "") {
       dispatch({ type: "products/setData", payload: result.data });
-    }
-
-    if (categories.length === 0) {
-      let categ = await getCategories(jwt);
-
-      if (categ !== "error" && categ !== "") {
-        dispatch({ type: "products/setCategories", payload: categ.data });
-      }
     }
   }
 
@@ -74,10 +66,20 @@ const ProductsCRUD = () => {
       });
   }
 
+  function gotoAddPage() {
+    navigate("/add-product");
+  }
+
   return (
     <div>
       <div className="allData">
         <h1 className="newOrder">List of Products</h1>
+        <div style={{ textAlign: "right", marginBottom: "10px" }}>
+          <Button variant="success" onClick={() => gotoAddPage()}>
+            Add a new Product
+          </Button>
+        </div>
+
         {data.length > 0 ? (
           <Table striped bordered hover>
             <thead>
@@ -128,21 +130,21 @@ const ProductsCRUD = () => {
         ) : (
           <p></p>
         )}
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Delete the product</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Are you sure you want to delete the product?</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="danger" onClick={(e) => deleteProduct(e)}>
+              Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Delete the product</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure you want to delete the product?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="danger" onClick={(e) => deleteProduct(e)}>
-            Delete
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 };

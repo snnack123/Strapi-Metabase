@@ -17,6 +17,7 @@ const EditProduct = () => {
   const [qty, setQty] = useState("");
   const [category, setCategory] = useState("");
   const [final, setFinal] = useState(false);
+  const [photo, setPhoto] = useState("");
   const [msg, setMsg] = useState("");
 
   const dispatch = useDispatch();
@@ -54,6 +55,9 @@ const EditProduct = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.data) {
+          if (res.data.attributes.Photo.data !== null) {
+            setPhoto(res.data.attributes.Photo.data);
+          }
           setProduct(res.data);
           setTitle(res.data.attributes.title);
           setDescription(res.data.attributes.description);
@@ -74,18 +78,18 @@ const EditProduct = () => {
   function saveProduct(e) {
     e.preventDefault();
 
-    makeFetch.method = "PUT";
-    makeFetch.headers.Authorization = "Bearer " + jwt;
-    delete makeFetch.authorization;
-    delete makeFetch.headers.authorization;
+    let formData = new FormData();
+
+    // makeFetch.method = "PUT";
+    // makeFetch.headers.Authorization = "Bearer " + jwt;
+    // delete makeFetch.authorization;
+    // delete makeFetch.headers.authorization;
 
     let myProduct = {
-      data: {
-        title,
-        description,
-        price,
-        qty,
-      },
+      title,
+      description,
+      price,
+      qty,
     };
 
     if (product.attributes.categories.data.length > 0) {
@@ -93,42 +97,57 @@ const EditProduct = () => {
         product.attributes.categories.data[0].attributes.name;
       if (productCategory === category) {
         if (productCategory === "") {
-          delete myProduct.data.categories;
+          delete myProduct.categories;
         } else {
           categories.forEach((item) => {
             if (item.attributes.name === category) {
-              myProduct.data.categories = [item.id];
+              myProduct.categories = [item.id];
             }
           });
         }
       } else {
         categories.forEach((item) => {
           if (item.attributes.name === category) {
-            myProduct.data.categories = [item.id];
+            myProduct.categories = [item.id];
           }
         });
       }
     } else {
       categories.forEach((item) => {
         if (item.attributes.name === category) {
-          myProduct.data.categories = [item.id];
+          myProduct.categories = [item.id];
         }
       });
     }
 
-    console.log(categories);
+    formData.append("data", JSON.stringify(myProduct));
 
-    console.log(myProduct);
+    if (photo !== "") {
+      console.log(photo[0]);
+      formData.append("files.Photo", photo[0]);
+    }
 
-    makeFetch.body = JSON.stringify(myProduct);
+    var requestOptions = {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+      body: formData,
+      redirect: "follow",
+    };
 
-    fetch(`http://localhost:1337/api/products/${id}`, makeFetch)
+    // makeFetch.body = JSON.stringify(myProduct);
+    // makeFetch.body = formData;
+
+    fetch(`http://localhost:1337/api/products/${id}`, requestOptions)
       .then((res) => res.json())
       .then((res) => {
+        console.log(res);
         if (res.data) {
           setMsg("Product successfully updated");
           setFinal(true);
           dispatch({ type: "products/clearData" });
+          setPhoto("");
         }
 
         if (res.error) {
@@ -216,7 +235,15 @@ const EditProduct = () => {
 
               <Form.Group className="mb-3">
                 <Form.Label>Photo</Form.Label>
-                {product.attributes.Photo.data !== null ? (
+
+                {photo?.[0] ? (
+                  <img
+                    src={URL.createObjectURL(photo[0])}
+                    alt=""
+                    width="500px"
+                    height="auto"
+                  />
+                ) : product.attributes.Photo.data !== null ? (
                   <div>
                     <img
                       src={`http://localhost:1337${product.attributes.Photo.data.attributes.url}`}
@@ -228,13 +255,33 @@ const EditProduct = () => {
                     />
                   </div>
                 ) : (
-                  <div>No image</div>
+                  <div>No image to show</div>
                 )}
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Change the photo</Form.Label>
+                <div style={{ display: "inline-block" }}>
+                  <Form.Control
+                    type="file"
+                    onChange={(e) => {
+                      if (e.target.files[0].type === "image/jpeg") {
+                        setPhoto(e.target.files);
+                      }
+                    }}
+                  />
+                </div>
+                {photo?.[0] ? (
+                  <div style={{ display: "inline-block", marginLeft: "15px" }}>
+                    <Button variant="warning" onClick={() => setPhoto("")}>
+                      Clear
+                    </Button>
+                  </div>
+                ) : null}
               </Form.Group>
 
               {!final ? (
                 <div>
-                  {" "}
                   <Button
                     variant="success"
                     type="submit"
@@ -262,9 +309,7 @@ const EditProduct = () => {
                 </Button>
               )}
             </Form>
-          ) : (
-            <p></p>
-          )}
+          ) : null}
           {final ? <p>{msg}</p> : <p></p>}
         </div>
       </div>

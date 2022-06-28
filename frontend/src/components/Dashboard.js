@@ -68,9 +68,7 @@ const Dashboard = () => {
           ></iframe>
         ) : error ? (
           <div>Error loading the dashboard</div>
-        ) : (
-          <div></div>
-        )}
+        ) : null}
       </div>
     </div>
   );
