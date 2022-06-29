@@ -9,29 +9,33 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (localStorage.getItem("dash-token") && localStorage.getItem("jwt")) {
-      let fetchData = makeFetch;
-
-      fetchData.method = "POST";
-      fetchData.headers.authorization = `Bearer ${jwt}`;
-      fetchData.body = JSON.stringify({
-        token: localStorage.getItem("dash-token"),
-      });
-
-      delete makeFetch.headers.Authorization;
-
-      fetch("http://localhost:1337/api/order/checkToken", fetchData)
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.message === "Your token expired!") {
-            awaitSetDashToken();
-          }
-        });
+      checkToken();
     }
 
     if (localStorage.getItem("jwt") && iframeUrl === "") {
       awaitSetDashToken();
     }
   }, []);
+
+  function checkToken() {
+    let fetchData = makeFetch;
+
+    fetchData.method = "POST";
+    fetchData.headers.authorization = `Bearer ${jwt}`;
+    fetchData.body = JSON.stringify({
+      token: localStorage.getItem("dash-token"),
+    });
+
+    delete makeFetch.headers.Authorization;
+
+    fetch("http://localhost:1337/api/order/checkToken", fetchData)
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.message === "Your token expired!") {
+          awaitSetDashToken();
+        }
+      });
+  }
 
   function awaitSetDashToken() {
     makeFetch.method = "GET";

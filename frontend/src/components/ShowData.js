@@ -53,15 +53,16 @@ const ShowData = () => {
       let populate = "";
 
       if (coll === "categories") {
+        dispatch({ type: "products/clearCategories" });
         populate = "products";
       } else {
+        dispatch({ type: "products/clearData" });
         populate = "categories";
       }
 
       fetch(`http://localhost:1337/api/${coll}?populate[0]=${populate}`)
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
           if (res.data !== null && res.data.length > 0) {
             if (coll === "products") {
               dispatch({ type: "products/setData", payload: res.data });

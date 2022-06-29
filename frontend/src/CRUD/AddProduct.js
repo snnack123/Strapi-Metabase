@@ -2,6 +2,8 @@ import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 import { getCategories } from "../components/functions/Functions";
 
@@ -9,14 +11,13 @@ const AddProduct = () => {
   const { categories } = useSelector((state) => state.products_store);
   const { jwt } = useSelector((state) => state.user_store);
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [qty, setQty] = useState("");
-  const [photo, setPhoto] = useState(null);
+  const [photo, setPhoto] = useState("");
   const [category, setCategory] = useState("");
   const [final, setFinal] = useState(false);
   const [msg, setMsg] = useState("");
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCategoriesList();
@@ -32,19 +33,16 @@ const AddProduct = () => {
     }
   }
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  function addProduct(e) {
-    e.preventDefault();
+  function addProduct(values) {
+    let data = JSON.parse(values);
 
     let formData = new FormData();
 
     let new_product = {
-      title,
-      description,
-      price,
-      qty,
+      title: data.title,
+      description: data.description,
+      price: data.price,
+      qty: data.qty,
     };
 
     categories.forEach((item) => {
@@ -54,7 +52,9 @@ const AddProduct = () => {
     });
 
     formData.append("data", JSON.stringify(new_product));
-    formData.append("files.Photo", photo[0]);
+    if (photo !== "") {
+      formData.append("files.Photo", photo[0]);
+    }
 
     var requestOptions = {
       method: "POST",
@@ -85,77 +85,128 @@ const AddProduct = () => {
     navigate("/products");
   }
 
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      description: "",
+      price: "",
+      qty: "",
+    },
+    validationSchema: Yup.object({
+      title: Yup.string()
+        .max(28, "Must be 28 characters or less")
+        .required("Required"),
+      description: Yup.string().required("Required"),
+      price: Yup.number("Price must be a number").required("Required"),
+      qty: Yup.number("Quantity must be a number").required("Required"),
+    }),
+    onSubmit: (values) => {
+      addProduct(JSON.stringify(values, null, 2));
+    },
+  });
+
   return (
     <div>
       <div className="allData">
         <h1 className="newOrder">Add a new Product</h1>
         <div className="editProduct">
-          <Form>
+          <Form onSubmit={formik.handleSubmit}>
             <Form.Group className="mb-3">
-              <Form.Label>Title</Form.Label>
+              <Form.Label htmlFor="title">Title</Form.Label>
               <Form.Control
+                id="title"
+                name="title"
                 type="text"
                 placeholder="Enter title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.title}
+                disabled={final ? true : false}
               />
+              {formik.touched.title && formik.errors.title ? (
+                <div>{formik.errors.title}</div>
+              ) : null}
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>Description</Form.Label>
+              <Form.Label htmlFor="description">Description</Form.Label>
               <Form.Control
                 type="text"
+                id="description"
+                name="description"
                 placeholder="Description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.description}
+                disabled={final ? true : false}
               />
+              {formik.touched.description && formik.errors.description ? (
+                <div>{formik.errors.description}</div>
+              ) : null}
+            </Form.Group>
 
-              <Form.Group className="mb-3">
-                <Form.Label>Price</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Price"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                />
-              </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label htmlFor="price">Price</Form.Label>
+              <Form.Control
+                id="price"
+                name="price"
+                type="number"
+                placeholder="Price"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.price}
+                disabled={final ? true : false}
+              />
+              {formik.touched.price && formik.errors.price ? (
+                <div>{formik.errors.price}</div>
+              ) : null}
+            </Form.Group>
 
-              <Form.Group className="mb-3">
-                <Form.Label>Quantity</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Quantity"
-                  value={qty}
-                  onChange={(e) => setQty(e.target.value)}
-                />
-              </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label htmlFor="qty">Quantity</Form.Label>
+              <Form.Control
+                id="qty"
+                name="qty"
+                type="number"
+                placeholder="Quantity"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.qty}
+                disabled={final ? true : false}
+              />
+              {formik.touched.qty && formik.errors.qty ? (
+                <div>{formik.errors.qty}</div>
+              ) : null}
+            </Form.Group>
 
-              <Form.Group className="mb-3">
-                <Form.Label>Category</Form.Label>
-                <select
-                  style={{ marginLeft: "5px" }}
-                  onChange={(e) => {
-                    if (e.target.value !== "") {
-                      setCategory(e.target.value);
-                    } else {
-                      setCategory("");
-                    }
-                  }}
-                  value={category}
-                >
-                  <option />
-                  {categories ? (
-                    categories.map((item, i) => (
-                      <option value={item.attributes.id} key={i}>
-                        {item.attributes.name}
-                      </option>
-                    ))
-                  ) : (
-                    <option></option>
-                  )}
-                </select>
-              </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Category</Form.Label>
+              <select
+                style={{ marginLeft: "5px" }}
+                onChange={(e) => {
+                  if (e.target.value !== "") {
+                    setCategory(e.target.value);
+                  } else {
+                    setCategory("");
+                  }
+                }}
+                value={category}
+                disabled={final ? true : false}
+              >
+                <option />
+                {categories ? (
+                  categories.map((item, i) => (
+                    <option value={item.attributes.id} key={i}>
+                      {item.attributes.name}
+                    </option>
+                  ))
+                ) : (
+                  <option></option>
+                )}
+              </select>
+            </Form.Group>
 
+            {final ? null : (
               <Form.Group className="mb-3">
                 <Form.Label>Photo</Form.Label>
                 <Form.Control
@@ -172,16 +223,15 @@ const AddProduct = () => {
                   />
                 ) : null}
               </Form.Group>
-            </Form.Group>
+            )}
 
             {!final ? (
               <div>
-                <Button variant="success" onClick={(e) => addProduct(e)}>
+                <Button variant="success" type="submit">
                   Add the Product
                 </Button>
                 <Button
                   variant="danger"
-                  type="submit"
                   onClick={() => goToProductsList()}
                   style={{ marginLeft: "5px" }}
                 >
@@ -191,7 +241,6 @@ const AddProduct = () => {
             ) : (
               <Button
                 variant="secondary"
-                type="submit"
                 onClick={() => goToProductsList()}
                 style={{ marginLeft: "5px" }}
               >

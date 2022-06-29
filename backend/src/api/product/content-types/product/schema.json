@@ -15,7 +15,8 @@
     "title": {
       "type": "string",
       "required": true,
-      "unique": true
+      "unique": true,
+      "maxLength": 28
     },
     "description": {
       "type": "text"
@@ -39,11 +40,12 @@
       "mappedBy": "products"
     },
     "Photo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     }
   }
 }

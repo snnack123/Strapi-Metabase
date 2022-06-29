@@ -84,7 +84,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
   },
 
   async addUsers(ctx) {
-    let csv_data = [];
+    // let csv_data = [];
 
     // fs.createReadStream(ctx.request.files.file.path)
     //   .pipe(csv())
