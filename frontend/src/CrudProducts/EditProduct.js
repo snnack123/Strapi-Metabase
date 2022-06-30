@@ -13,10 +13,6 @@ const EditProduct = () => {
   const { categories } = useSelector((state) => state.products_store);
 
   const [product, setProduct] = useState();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [qty, setQty] = useState("");
   const [category, setCategory] = useState("");
   const [final, setFinal] = useState(false);
   const [photo, setPhoto] = useState("");
@@ -52,7 +48,8 @@ const EditProduct = () => {
     delete makeFetch.headers.authorization;
 
     fetch(
-      `http://localhost:1337/api/products/${id}?populate[0]=categories&populate[1]=Photo`
+      `http://localhost:1337/api/products/${id}?populate[0]=categories&populate[1]=Photo`,
+      makeFetch
     )
       .then((res) => res.json())
       .then((res) => {
@@ -108,34 +105,6 @@ const EditProduct = () => {
           }
         });
       }
-
-      // if (product.attributes.categories.data.length > 0) {
-      //   let productCategory =
-      //     product.attributes.categories.data[0].attributes.name;
-      //   if (productCategory === category) {
-      //     if (productCategory === "") {
-      //       delete myProduct.categories;
-      //     } else {
-      //       categories.forEach((item) => {
-      //         if (item.attributes.name === category) {
-      //           myProduct.categories = [item.id];
-      //         }
-      //       });
-      //     }
-      //   } else {
-      //     categories.forEach((item) => {
-      //       if (item.attributes.name === category) {
-      //         myProduct.categories = [item.id];
-      //       }
-      //     });
-      //   }
-      // } else {
-      //   categories.forEach((item) => {
-      //     if (item.attributes.name === category) {
-      //       myProduct.categories = [item.id];
-      //     }
-      //   });
-      // }
     }
 
     if (JSON.stringify(myProduct) !== "{}") {
@@ -166,6 +135,7 @@ const EditProduct = () => {
         .then((res) => res.json())
         .then((res) => {
           if (res.id) {
+            dispatch({ type: "categories/clearCategories" });
             setMsg("Product successfully updated");
             setFinal(true);
             dispatch({ type: "products/clearData" });

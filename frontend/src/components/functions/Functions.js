@@ -49,7 +49,7 @@ export function getCategories(jwt) {
   delete makeFetch.authorization;
   delete makeFetch.headers.authorization;
 
-  return fetch(`http://localhost:1337/api/categories`)
+  return fetch(`http://localhost:1337/api/categories?populate[0]=products`)
     .then((res) => res.json())
     .then((res) => {
       if (res.error) {

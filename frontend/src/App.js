@@ -11,9 +11,12 @@ import { useEffect } from "react";
 import { getMyOrders } from "./components/functions/Functions";
 import Dashboard from "./components/Dashboard";
 import NewClients from "./components/NewClients";
-import ProductsCRUD from "./CRUD/ProductsCRUD";
-import EditProduct from "./CRUD/EditProduct";
-import AddProduct from "./CRUD/AddProduct";
+import ProductsCRUD from "./CrudProducts/ProductsCRUD";
+import EditProduct from "./CrudProducts/EditProduct";
+import AddProduct from "./CrudProducts/AddProduct";
+import CategoriesCRUD from "./CrudCategories/CategoriesCRUD";
+import AddCategory from "./CrudCategories/AddCategory";
+import EditCategory from "./CrudCategories/EditCategory";
 
 function App() {
   const { loggedIn, username } = useSelector((state) => state.user_store);
@@ -69,6 +72,9 @@ function App() {
           <Route path="/products" element={<ProductsCRUD />} />
           <Route path="/edit-product/:id" element={<EditProduct />} />
           <Route path="/add-product" element={<AddProduct />} />
+          <Route path="/categories" element={<CategoriesCRUD />} />
+          <Route path="/add-category" element={<AddCategory />} />
+          <Route path="/edit-category/:id" element={<EditCategory />} />
         </Routes>
       ) : (
         <Routes>
@@ -81,6 +87,9 @@ function App() {
           <Route path="/products" element={<Login />} />
           <Route path="/edit-product/:id" element={<Login />} />
           <Route path="/add-product" element={<Login />} />
+          <Route path="/categories" element={<Login />} />
+          <Route path="/add-category" element={<Login />} />
+          <Route path="/edit-category/:id" element={<Login />} />
         </Routes>
       )}
     </div>

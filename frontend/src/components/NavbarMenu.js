@@ -85,6 +85,10 @@ export default function NavbarMenu() {
     navigate("/products");
   }
 
+  function newCategory() {
+    navigate("/categories");
+  }
+
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -103,7 +107,10 @@ export default function NavbarMenu() {
                     New Order
                   </NavDropdown.Item>
                   <NavDropdown.Item onClick={() => newProduct()}>
-                    CRUD Product
+                    CRUD Products
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => newCategory()}>
+                    CRUD Categories
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : null}
