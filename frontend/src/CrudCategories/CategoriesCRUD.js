@@ -69,8 +69,6 @@ const CategoriesCRUD = () => {
     navigate(`/edit-category/${category.id}`);
   }
 
-  // function seeMore() {}
-
   function deleteCategory() {
     var requestOptions = {
       method: "DELETE",
@@ -119,7 +117,6 @@ const CategoriesCRUD = () => {
                 <th>Date created</th>
                 <th>Date updated</th>
                 <th>Date published</th>
-                {/* <th>See more</th> */}
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
@@ -133,11 +130,6 @@ const CategoriesCRUD = () => {
                   <td>{setDate(d.attributes.createdAt)}</td>
                   <td>{setDate(d.attributes.updatedAt)}</td>
                   <td>{setDate(d.attributes.publishedAt)}</td>
-                  {/* <td style={{ textAlign: "center" }}>
-                    <Button variant="info" onClick={(e) => seeMore(e, d)}>
-                      View Data
-                    </Button>
-                  </td> */}
                   <td style={{ textAlign: "center" }}>
                     <Button
                       variant="warning"

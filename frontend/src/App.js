@@ -17,6 +17,7 @@ import AddProduct from "./CrudProducts/AddProduct";
 import CategoriesCRUD from "./CrudCategories/CategoriesCRUD";
 import AddCategory from "./CrudCategories/AddCategory";
 import EditCategory from "./CrudCategories/EditCategory";
+import ViewProduct from "./CrudProducts/ViewProduct";
 
 function App() {
   const { loggedIn, username } = useSelector((state) => state.user_store);
@@ -75,6 +76,7 @@ function App() {
           <Route path="/categories" element={<CategoriesCRUD />} />
           <Route path="/add-category" element={<AddCategory />} />
           <Route path="/edit-category/:id" element={<EditCategory />} />
+          <Route path="/view-product/:id" element={<ViewProduct />} />
         </Routes>
       ) : (
         <Routes>
@@ -90,6 +92,7 @@ function App() {
           <Route path="/categories" element={<Login />} />
           <Route path="/add-category" element={<Login />} />
           <Route path="/edit-category/:id" element={<Login />} />
+          <Route path="/view-product/:id" element={<Login />} />
         </Routes>
       )}
     </div>

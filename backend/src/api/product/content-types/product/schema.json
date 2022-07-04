@@ -46,6 +46,14 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "viewCounter": {
+      "type": "json"
+    },
+    "counter": {
+      "type": "biginteger",
+      "min": "0",
+      "default": "0"
     }
   }
 }

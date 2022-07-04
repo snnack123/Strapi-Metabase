@@ -70,6 +70,11 @@ const ProductsCRUD = () => {
     navigate("/add-product");
   }
 
+  function seeMore(e, product) {
+    e.preventDefault();
+    navigate(`/view-product/${product.id}`);
+  }
+
   return (
     <div>
       <div className="allData">
@@ -90,6 +95,7 @@ const ProductsCRUD = () => {
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Category</th>
+                <th>Product Details</th>
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
@@ -107,6 +113,11 @@ const ProductsCRUD = () => {
                   ) : (
                     <td></td>
                   )}
+                  <td style={{ textAlign: "center" }}>
+                    <Button variant="info" onClick={(e) => seeMore(e, d)}>
+                      View Product
+                    </Button>
+                  </td>
                   <td style={{ textAlign: "center" }}>
                     <Button
                       variant="warning"

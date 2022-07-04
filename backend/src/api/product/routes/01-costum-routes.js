@@ -5,5 +5,10 @@ module.exports = {
       path: "/product-update/:id",
       handler: "product.updateProduct",
     },
+    {
+      method: "POST",
+      path: "/view-product/:id",
+      handler: "product.updateCounter",
+    },
   ],
 };

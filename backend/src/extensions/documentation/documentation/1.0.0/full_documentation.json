@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2022-06-30T07:35:28.595Z"
+    "x-generation-date": "2022-07-04T09:00:51.989Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -1236,6 +1236,12 @@
                                         }
                                       }
                                     }
+                                  },
+                                  "viewCounter": {},
+                                  "counter": {
+                                    "type": "string",
+                                    "pattern": "^\\d*$",
+                                    "example": "123456789"
                                   },
                                   "createdAt": {
                                     "type": "string",
@@ -2480,6 +2486,12 @@
                                       }
                                     }
                                   }
+                                },
+                                "viewCounter": {},
+                                "counter": {
+                                  "type": "string",
+                                  "pattern": "^\\d*$",
+                                  "example": "123456789"
                                 },
                                 "createdAt": {
                                   "type": "string",
@@ -3777,6 +3789,12 @@
                                       }
                                     }
                                   },
+                                  "viewCounter": {},
+                                  "counter": {
+                                    "type": "string",
+                                    "pattern": "^\\d*$",
+                                    "example": "123456789"
+                                  },
                                   "createdAt": {
                                     "type": "string",
                                     "format": "date-time"
@@ -5050,6 +5068,12 @@
                                     }
                                   }
                                 },
+                                "viewCounter": {},
+                                "counter": {
+                                  "type": "string",
+                                  "pattern": "^\\d*$",
+                                  "example": "123456789"
+                                },
                                 "createdAt": {
                                   "type": "string",
                                   "format": "date-time"
@@ -5238,6 +5262,12 @@
                   }
                 ],
                 "example": "string or id"
+              },
+              "viewCounter": {},
+              "counter": {
+                "type": "string",
+                "pattern": "^\\d*$",
+                "example": "123456789"
               }
             }
           }
@@ -6317,6 +6347,12 @@
                                                     }
                                                   }
                                                 },
+                                                "viewCounter": {},
+                                                "counter": {
+                                                  "type": "string",
+                                                  "pattern": "^\\d*$",
+                                                  "example": "123456789"
+                                                },
                                                 "createdAt": {
                                                   "type": "string",
                                                   "format": "date-time"
@@ -6812,6 +6848,12 @@
                           }
                         }
                       }
+                    },
+                    "viewCounter": {},
+                    "counter": {
+                      "type": "string",
+                      "pattern": "^\\d*$",
+                      "example": "123456789"
                     },
                     "createdAt": {
                       "type": "string",
@@ -7961,6 +8003,12 @@
                                                   }
                                                 }
                                               },
+                                              "viewCounter": {},
+                                              "counter": {
+                                                "type": "string",
+                                                "pattern": "^\\d*$",
+                                                "example": "123456789"
+                                              },
                                               "createdAt": {
                                                 "type": "string",
                                                 "format": "date-time"
@@ -8456,6 +8504,12 @@
                         }
                       }
                     }
+                  },
+                  "viewCounter": {},
+                  "counter": {
+                    "type": "string",
+                    "pattern": "^\\d*$",
+                    "example": "123456789"
                   },
                   "createdAt": {
                     "type": "string",
