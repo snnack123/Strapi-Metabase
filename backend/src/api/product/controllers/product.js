@@ -86,7 +86,9 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
 
           if (hoursBetweenDates < 24) {
             return ctx.response.badRequest(
-              `You already saw this product. You must wait ${hoursBetweenDates} hours.`
+              `You already saw this product. You must wait ${
+                24 - hoursBetweenDates
+              } hours.`
             );
           } else {
             toUpdate = true;
